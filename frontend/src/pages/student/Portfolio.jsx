@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
-import { Save, Eye, Plus, Trash2, Github, Linkedin, Globe, LayoutTemplate, Briefcase, Zap } from 'lucide-react';
+import { Save, Eye, Plus, Trash2, Globe, LayoutTemplate, Briefcase, Zap } from 'lucide-react';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import ThemeLayout from '../../components/ui/ThemeLayout';
 import GlassCard from '../../components/ui/GlassCard';
@@ -250,7 +251,7 @@ const PortfolioBuilder = () => {
               <div className="space-y-5">
                 <div>
                   <label className="flex items-center gap-2 text-xs font-bold text-slate-400 mb-2">
-                    <Github className="w-4 h-4 text-white" /> GitHub URL
+                    <FaGithub className="w-4 h-4 text-white" /> GitHub URL
                   </label>
                   <input 
                     type="url" name="github" value={portfolio.socialLinks?.github || ''} onChange={handleSocialChange} 
@@ -259,7 +260,7 @@ const PortfolioBuilder = () => {
                 </div>
                 <div>
                   <label className="flex items-center gap-2 text-xs font-bold text-slate-400 mb-2">
-                    <Linkedin className="w-4 h-4 text-blue-400" /> LinkedIn URL
+                    <FaLinkedin className="w-4 h-4 text-blue-400" /> LinkedIn URL
                   </label>
                   <input 
                     type="url" name="linkedin" value={portfolio.socialLinks?.linkedin || ''} onChange={handleSocialChange} 
