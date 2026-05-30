@@ -44,7 +44,6 @@ const ManageUsers = () => {
             </h1>
             <p className="text-slate-400">View and manage all registered accounts on the platform.</p>
           </div>
-          </div>
           <button className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg shadow-[0_0_15px_rgba(37,99,235,0.3)] transition-all flex items-center gap-2">
             <Users className="w-4 h-4" /> Add User
           </button>
