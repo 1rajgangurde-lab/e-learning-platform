@@ -4,7 +4,7 @@ import { useAdminDashboard } from '../../hooks/useDashboard';
 import DashboardCard from '../../components/dashboard/DashboardCard';
 import SystemHealthChart from '../../components/admin/SystemHealthChart';
 import NotificationPanel from '../../components/dashboard/NotificationPanel';
-import { Users, BookOpen, UserCheck, AlertTriangle, Activity, Database, Cpu, Megaphone, Shield } from 'lucide-react';
+import { Users, BookOpen, UserCheck, AlertTriangle, Activity, Database, Cpu, Megaphone, Shield, Award } from 'lucide-react';
 import { useNotifications } from '../../hooks/useNotifications';
 
 const AdminDashboard = () => {
@@ -24,10 +24,10 @@ const AdminDashboard = () => {
 
         {/* Main Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <DashboardCard title="Active Users" value={stats?.activeUsers?.toLocaleString() || '12,450'} icon={Users} colorClass="text-blue-500" />
-          <DashboardCard title="New Registrations" value={stats?.newRegistrations || '342'} icon={UserCheck} colorClass="text-purple-500" />
-          <DashboardCard title="Total Courses" value={stats?.totalCourses || '485'} icon={BookOpen} colorClass="text-blue-400" />
-          <DashboardCard title="Reports Queue" value={stats?.reportsQueue || '14'} icon={AlertTriangle} colorClass="text-amber-500" />
+          <DashboardCard title="Total Students" value={stats?.activeUsers?.toLocaleString() || '200'} icon={Users} colorClass="text-blue-500" />
+          <DashboardCard title="Total Courses" value={stats?.totalCourses || '30'} icon={BookOpen} colorClass="text-purple-500" />
+          <DashboardCard title="Avg Completion" value={stats?.completionRate || '78%'} icon={Activity} colorClass="text-emerald-400" />
+          <DashboardCard title="Top Course" value={stats?.topCourse || 'React'} icon={Award} colorClass="text-amber-500" />
         </div>
 
         {/* System Health Grid */}

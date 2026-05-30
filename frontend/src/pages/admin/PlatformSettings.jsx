@@ -11,7 +11,7 @@ const Toggle = ({ label, description, enabled, onChange }) => (
     </div>
     <button 
       onClick={onChange}
-      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${enabled ? 'bg-rose-500' : 'bg-slate-700'}`}
+      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${enabled ? 'bg-blue-500' : 'bg-slate-700'}`}
     >
       <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${enabled ? 'translate-x-6' : 'translate-x-1'}`} />
     </button>
@@ -40,11 +40,11 @@ const PlatformSettings = () => {
         <div className="flex justify-between items-end">
           <div>
             <h1 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
-              <Settings className="w-8 h-8 text-rose-500" /> Platform Settings
+              <Settings className="w-8 h-8 text-blue-500" /> Platform Settings
             </h1>
             <p className="text-slate-400">Configure global platform behavior, features, and maintenance.</p>
           </div>
-          <button className="px-6 py-2 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-lg shadow-[0_0_15px_rgba(225,29,72,0.3)] transition-all flex items-center gap-2">
+          <button className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg shadow-[0_0_15px_rgba(37,99,235,0.3)] transition-all flex items-center gap-2">
             <Check className="w-4 h-4" /> Save Changes
           </button>
         </div>
@@ -110,8 +110,31 @@ const PlatformSettings = () => {
               onChange={() => handleToggle('certificates')}
             />
             
-            <div className="pt-4 border-t border-slate-800">
-              <label className="block text-sm font-bold text-slate-400 mb-2">OpenAI API Key</label>
+            <div className="pt-4 border-t border-slate-800 space-y-4">
+              <div>
+                <label className="block text-sm font-bold text-slate-400 mb-2">OpenAI API Key</label>
+                <input 
+                  type="password" 
+                  defaultValue="sk-................................"
+                  className="w-full px-4 py-2.5 rounded-lg border border-slate-700/50 bg-slate-900/50 focus:bg-slate-900 focus:border-blue-500/50 outline-none text-white transition-all shadow-inner font-mono text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-slate-400 mb-2">Cloudinary URL</label>
+                <input 
+                  type="password" 
+                  defaultValue="cloudinary://...................."
+                  className="w-full px-4 py-2.5 rounded-lg border border-slate-700/50 bg-slate-900/50 focus:bg-slate-900 focus:border-blue-500/50 outline-none text-white transition-all shadow-inner font-mono text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-slate-400 mb-2">SMTP Host</label>
+                <input 
+                  type="text" 
+                  defaultValue="smtp.mailgun.org"
+                  className="w-full px-4 py-2.5 rounded-lg border border-slate-700/50 bg-slate-900/50 focus:bg-slate-900 focus:border-blue-500/50 outline-none text-white transition-all shadow-inner font-mono text-sm"
+                />
+              </div>
               <input 
                 type="password" 
                 defaultValue="sk-................................"

@@ -3,15 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useAuthGuard } from '../../hooks/useAuthGuard';
 import AuthRequiredModal from '../auth/AuthRequiredModal';
+import { useAuth } from '../../context/AuthContext';
 
 const ExploreCoursesButton = ({ className }) => {
   const navigate = useNavigate();
   const { isModalOpen, requireAuth, closeModal, redirectPath } = useAuthGuard();
+  const { isAuthenticated } = useAuth();
 
   const handleExplore = () => {
-    requireAuth(() => {
+    if (isAuthenticated) {
       navigate('/courses');
-    }, '/courses');
+    } else {
+      requireAuth(null, '/courses');
+    }
   };
 
   return (

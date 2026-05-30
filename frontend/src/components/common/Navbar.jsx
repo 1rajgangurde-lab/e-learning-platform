@@ -1,12 +1,25 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { BookOpen, LogOut, User } from 'lucide-react';
+import { useAuthGuard } from '../../hooks/useAuthGuard';
+import AuthRequiredModal from '../auth/AuthRequiredModal';
 
 const Navbar = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, isAuthenticated } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const isHome = location.pathname === '/';
+  const { isModalOpen, requireAuth, closeModal, redirectPath } = useAuthGuard();
+
+  const handleCoursesClick = (e) => {
+    e.preventDefault();
+    if (isAuthenticated) {
+      navigate('/courses');
+    } else {
+      requireAuth(null, '/courses');
+    }
+  };
 
   return (
     <nav className="sticky top-0 z-50 w-full backdrop-blur-xl border-b bg-[#0F172A]/80 border-white/10 transition-colors duration-300">
@@ -16,7 +29,7 @@ const Navbar = () => {
           <span>AI E-Learning</span>
         </Link>
         <div className="hidden md:flex items-center gap-6 font-medium text-slate-300">
-          <Link to="/courses" className="transition-colors hover:text-white">Courses</Link>
+          <button onClick={handleCoursesClick} className="transition-colors hover:text-white">Courses</button>
           <Link to="/student/ai" className="transition-colors hover:text-white">AI Roadmap</Link>
         </div>
 
@@ -39,6 +52,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
+      <AuthRequiredModal isOpen={isModalOpen} onClose={closeModal} redirectTo={redirectPath} />
     </nav>
   );
 };

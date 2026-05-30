@@ -7,10 +7,11 @@ import GlassCard from '../ui/GlassCard';
 import GlassInput from '../ui/GlassInput';
 import GradientButton from '../ui/GradientButton';
 import ThemeLayout from '../ui/ThemeLayout';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const { login } = useAuth();
-  const { redirectAfterAuth } = useAuthRedirect();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,7 +22,7 @@ const Login = () => {
     setLoading(true);
     try {
       await login(formData);
-      redirectAfterAuth();
+      navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to login');
     } finally {

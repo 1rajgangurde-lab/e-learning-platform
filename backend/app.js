@@ -17,16 +17,16 @@ const aiRoutes = require('./src/routes/aiRoutes');
 const wishlistRoutes = require('./src/routes/wishlistRoutes');
 const streakRoutes = require('./src/routes/streakRoutes');
 const bookmarkRoutes = require('./src/routes/bookmarkRoutes');
+const uploadRoutes = require('./src/routes/uploadRoutes');
+const submissionRoutes = require('./src/routes/submissionRoutes');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const xss = require('xss-clean');
 const { errorHandler } = require('./src/middleware/errorHandler');
 
 const app = express();
 
 // Middleware
 app.use(helmet());
-app.use(xss());
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 mins
@@ -55,6 +55,8 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/streak', streakRoutes);
 app.use('/api/bookmarks', bookmarkRoutes);
+app.use('/api/upload', uploadRoutes);
+app.use('/api/submissions', submissionRoutes);
 app.use('/api', gamificationRoutes);
 app.use('/api/v1/ai', aiRoutes);
 

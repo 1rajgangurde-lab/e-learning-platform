@@ -8,10 +8,11 @@ import GlassCard from '../ui/GlassCard';
 import GlassInput from '../ui/GlassInput';
 import GradientButton from '../ui/GradientButton';
 import ThemeLayout from '../ui/ThemeLayout';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const { register } = useAuth();
-  const { redirectAfterAuth } = useAuthRedirect();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ 
     name: '', 
     email: '', 
@@ -33,7 +34,7 @@ const Register = () => {
         password: formData.password,
         role: formData.role
       });
-      redirectAfterAuth();
+      navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to create account');
       setLoading(false);

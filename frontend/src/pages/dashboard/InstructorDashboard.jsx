@@ -7,6 +7,7 @@ import RevenueChart from '../../components/instructor/RevenueChart';
 import QuickActionPanel from '../../components/dashboard/QuickActionPanel';
 import StudentInsights from '../../components/instructor/StudentInsights';
 import PayoutCard from '../../components/instructor/PayoutCard';
+import PendingProjects from '../../components/instructor/PendingProjects';
 import { Users, BookOpen, DollarSign, Star, TrendingUp, UserCheck, Activity, Award } from 'lucide-react';
 
 const InstructorDashboard = () => {
@@ -43,6 +44,7 @@ const InstructorDashboard = () => {
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           <RevenueChart />
+          <PendingProjects />
           
           <div className="grid md:grid-cols-2 gap-6">
             <StudentInsights />

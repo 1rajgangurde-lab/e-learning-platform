@@ -24,8 +24,8 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    // If 401 Unauthorized and not already retrying
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // If 401 Unauthorized and not already retrying, and NOT from a login request
+    if (error.response?.status === 401 && !originalRequest._retry && !originalRequest.url.includes('/auth/login')) {
       originalRequest._retry = true;
       try {
         const { data } = await axios.post(`${API_URL}/auth/refresh`, {}, { withCredentials: true });

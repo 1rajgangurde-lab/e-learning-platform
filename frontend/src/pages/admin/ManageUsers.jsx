@@ -16,6 +16,7 @@ const mockUsers = [
 const ManageUsers = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUser, setSelectedUser] = useState(null);
+  const [activeFilter, setActiveFilter] = useState('All');
 
   const getRoleBadge = (role) => {
     switch (role) {
@@ -43,9 +44,36 @@ const ManageUsers = () => {
             </h1>
             <p className="text-slate-400">View and manage all registered accounts on the platform.</p>
           </div>
-          <button className="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-lg shadow-[0_0_15px_rgba(225,29,72,0.3)] transition-all flex items-center gap-2">
+          </div>
+          <button className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg shadow-[0_0_15px_rgba(37,99,235,0.3)] transition-all flex items-center gap-2">
             <Users className="w-4 h-4" /> Add User
           </button>
+        </div>
+
+        {/* Quick Filter Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          {['All', 'Students', 'Instructors', 'Admins', 'Suspended'].map(filter => (
+            <button
+              key={filter}
+              onClick={() => setActiveFilter(filter)}
+              className={`p-4 rounded-xl border transition-all text-center ${
+                activeFilter === filter 
+                  ? 'bg-blue-500/20 border-blue-500/50 text-blue-400' 
+                  : 'bg-slate-900/50 border-white/5 text-slate-400 hover:bg-slate-800'
+              }`}
+            >
+              <div className="text-2xl font-bold mb-1">
+                {filter === 'All' ? mockUsers.length : mockUsers.filter(u => {
+                  if (filter === 'Students') return u.role === ROLES.STUDENT;
+                  if (filter === 'Instructors') return u.role === ROLES.INSTRUCTOR;
+                  if (filter === 'Admins') return u.role === ROLES.ADMIN;
+                  if (filter === 'Suspended') return u.status === 'Suspended';
+                  return true;
+                }).length}
+              </div>
+              <div className="text-xs uppercase tracking-wider">{filter}</div>
+            </button>
+          ))}
         </div>
 
         <GlassCard className="p-6 border-slate-700/50">
@@ -57,7 +85,7 @@ const ManageUsers = () => {
                 placeholder="Search users by name, email, or ID..." 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-700/50 bg-slate-900/50 focus:bg-slate-900 focus:border-rose-500/50 outline-none text-white transition-all shadow-inner placeholder-slate-600"
+                className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-700/50 bg-slate-900/50 focus:bg-slate-900 focus:border-blue-500/50 outline-none text-white transition-all shadow-inner placeholder-slate-600"
               />
             </div>
             <button className="px-6 py-3 rounded-xl border border-slate-700/50 bg-slate-900/50 hover:bg-slate-800 text-slate-300 font-bold transition-all flex items-center gap-2">
@@ -77,7 +105,13 @@ const ManageUsers = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800">
-                {mockUsers.map((user) => (
+                {mockUsers.filter(u => {
+                  if (activeFilter === 'Students') return u.role === ROLES.STUDENT;
+                  if (activeFilter === 'Instructors') return u.role === ROLES.INSTRUCTOR;
+                  if (activeFilter === 'Admins') return u.role === ROLES.ADMIN;
+                  if (activeFilter === 'Suspended') return u.status === 'Suspended';
+                  return true;
+                }).map((user) => (
                   <tr 
                     key={user.id} 
                     className="hover:bg-slate-800/30 transition-colors group cursor-pointer"
@@ -98,12 +132,15 @@ const ManageUsers = () => {
                     <td className="p-4 text-sm font-medium">{getStatusBadge(user.status)}</td>
                     <td className="p-4 text-sm text-slate-400">{user.joined}</td>
                     <td className="p-4 text-right relative">
-                      <button 
-                        className="p-2 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition-colors"
-                        onClick={(e) => e.stopPropagation()} // Prevent row click when clicking action menu
-                      >
-                        <MoreVertical className="w-5 h-5" />
-                      </button>
+                      <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button className="px-3 py-1 bg-blue-500/10 text-blue-400 rounded hover:bg-blue-500/20 text-xs font-bold" onClick={(e) => e.stopPropagation()}>Edit</button>
+                        {user.status !== 'Suspended' ? (
+                          <button className="px-3 py-1 bg-amber-500/10 text-amber-400 rounded hover:bg-amber-500/20 text-xs font-bold" onClick={(e) => e.stopPropagation()}>Suspend</button>
+                        ) : (
+                          <button className="px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded hover:bg-emerald-500/20 text-xs font-bold" onClick={(e) => e.stopPropagation()}>Restore</button>
+                        )}
+                        <button className="px-3 py-1 bg-red-500/10 text-red-400 rounded hover:bg-red-500/20 text-xs font-bold" onClick={(e) => e.stopPropagation()}>Delete</button>
+                      </div>
                     </td>
                   </tr>
                 ))}

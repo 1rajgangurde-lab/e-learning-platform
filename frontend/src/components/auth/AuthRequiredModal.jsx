@@ -3,11 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Lock, X, LogIn, UserPlus } from 'lucide-react';
 import { useAuthRedirect } from '../../hooks/useAuthRedirect';
+import { useAuth } from '../../context/AuthContext';
 
 const AuthRequiredModal = ({ isOpen, onClose, redirectTo = '/courses' }) => {
+  const { isAuthenticated } = useAuth();
   const { goToLogin, goToRegister, closeAndGoHome } = useAuthRedirect();
 
-  if (!isOpen) return null;
+  if (!isOpen || isAuthenticated) return null;
 
   const handleClose = () => {
     onClose();

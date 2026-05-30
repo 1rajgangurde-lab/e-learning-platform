@@ -7,15 +7,15 @@ import AuthRequiredModal from '../components/auth/AuthRequiredModal';
 import ThemeLayout from '../components/ui/ThemeLayout';
 
 const ProtectedRoute = ({ allowedRoles }) => {
-  const { user, token, loading } = useAuth();
+  const { user, token, isAuthenticated, loading } = useAuth();
   const [showModal, setShowModal] = React.useState(false);
 
   React.useEffect(() => {
-    if (!loading && (!token || !user)) {
+    if (!loading && !isAuthenticated) {
       toast.error('Please sign in to continue learning', { icon: '⚠️', id: 'auth-required-toast' });
       setShowModal(true);
     }
-  }, [loading, token, user]);
+  }, [loading, isAuthenticated]);
 
   if (loading) {
     return (
@@ -27,7 +27,7 @@ const ProtectedRoute = ({ allowedRoles }) => {
     );
   }
 
-  if (!token || !user) {
+  if (!isAuthenticated) {
     return (
       <ThemeLayout hideParticles={true}>
         <div className="min-h-screen flex items-center justify-center">

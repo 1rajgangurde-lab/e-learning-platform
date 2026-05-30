@@ -10,6 +10,8 @@ const pendingCourses = [
 ];
 
 const CourseModeration = () => {
+  const [activeTab, setActiveTab] = React.useState('pending');
+
   return (
     <ThemeLayout hideParticles={false}>
       <div className="max-w-7xl mx-auto space-y-8 pb-12">
@@ -24,6 +26,27 @@ const CourseModeration = () => {
             <Clock className="w-4 h-4 text-yellow-500" />
             <span className="text-sm font-bold text-white">3 Pending Reviews</span>
           </div>
+        </div>
+
+        <div className="flex border-b border-white/10 mb-6">
+          {[
+            { id: 'pending', label: 'Pending Courses' },
+            { id: 'approved', label: 'Approved Courses' },
+            { id: 'rejected', label: 'Rejected Courses' },
+            { id: 'reported', label: 'Reported Courses' }
+          ].map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-6 py-4 font-medium transition-colors border-b-2 ${
+                activeTab === tab.id 
+                  ? 'border-blue-500 text-blue-400 bg-blue-500/5' 
+                  : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-white/5'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
 
         <div className="grid gap-6">

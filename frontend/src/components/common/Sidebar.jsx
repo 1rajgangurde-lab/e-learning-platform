@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { 
   LayoutDashboard, BookOpen, Award, User, Briefcase, 
-  Settings, Users, FileText, BarChart, PlusCircle, Lightbulb, CheckSquare, DollarSign, CreditCard, Shield
+  Settings, Users, FileText, BarChart, PlusCircle, Lightbulb, CheckSquare, DollarSign, CreditCard, Shield, Cpu, Lock
 } from 'lucide-react';
 import { ROLES } from '../../utils/constants';
 
@@ -33,11 +33,14 @@ const Sidebar = () => {
         ];
       case ROLES.ADMIN:
         return [
-          { name: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
-          { name: 'Users', path: '/admin/users', icon: Users },
-          { name: 'Moderation', path: '/admin/moderation', icon: Shield },
-          { name: 'Reports', path: '/admin/reports', icon: FileText },
-          { name: 'Settings', path: '/admin/settings', icon: Settings },
+          { name: 'Overview', path: '/admin/dashboard', icon: LayoutDashboard },
+          { name: 'User Management', path: '/admin/users', icon: Users },
+          { name: 'Course Moderation', path: '/admin/moderation', icon: Shield },
+          { name: 'AI Monitoring', path: '/admin/ai', icon: Cpu },
+          { name: 'Revenue Center', path: '/admin/revenue', icon: DollarSign },
+          { name: 'Security Center', path: '/admin/security', icon: Lock },
+          { name: 'Project Reviews', path: '/admin/projects', icon: CheckSquare },
+          { name: 'Platform Settings', path: '/admin/settings', icon: Settings },
         ];
       default:
         return [];

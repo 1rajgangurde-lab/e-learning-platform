@@ -7,8 +7,12 @@ const AuthContext = createContext({});
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const [token, setToken] = useState(localStorage.getItem('accessToken') || null);
+  const isAuthenticated = !!user && !!token;
   const [loading, setLoading] = useState(true);
 
   // Sync token changes from Axios interceptors
@@ -52,6 +56,7 @@ export const AuthProvider = ({ children }) => {
     setToken(accessToken);
     setUser(userData);
     localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('user', JSON.stringify(userData));
     api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
   };
 
@@ -61,6 +66,7 @@ export const AuthProvider = ({ children }) => {
     setToken(accessToken);
     setUser(userData);
     localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('user', JSON.stringify(userData));
     api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
   };
 
@@ -73,6 +79,7 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     setUser(null);
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('user');
     delete api.defaults.headers.common['Authorization'];
   };
 
@@ -80,7 +87,8 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider 
       value={{ 
         user, 
-        token, 
+        token,
+        isAuthenticated,
         role: user?.role, 
         xp: user?.xp, 
         streak: user?.learningStreak, 
